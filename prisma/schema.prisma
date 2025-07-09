@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// 分佣关系实体
+model FtUserCommissionRelationship {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  inviteUserId    String    @map("invite_user_id")    // 邀请人用户ID
+  inviteeUserId   String    @map("invitee_user_id")   // 被邀请人用户ID
+  status          String    @default("COMMON_STATUS_ACTIVE")  // 关系状态
+  sourceEvent     String    @map("source_event")       // 创建来源事件类型
+  sourceEventId   String?   @map("source_event_id")    // 来源事件ID
+  isNewUser       Boolean?  @map("is_new_user")        // 是否为新用户
+  extends         Json?     // 扩展信息
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@index([inviteUserId])
+  @@index([inviteeUserId])
+  @@index([sourceEventId])
+  @@index([inviteUserId, createdAt(sort: Desc)])
+  @@map("ft_user_commission_relationship")
+}
+
+// 分佣明细流水实体
+model FtUserAssetFlow {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String    @map("user_id")
+  assetId     String    @map("asset_id")
+  assetName   String    @map("asset_name")
+  flowType    String    @map("flow_type")      // USER_ASSET_FLOW_TYPE 枚举
+  symbol      String                           // USER_ASSET_FLOW_SYMBOL 枚举
+  amount      Float     @default(0)
+  extends     Json      @default("{}")
+  unique      String    @unique
+  status      String    @default("USER_ASSET_FLOW_STATUS_PENDING")  // USER_ASSET_FLOW_STATUS 枚举
+  doneTime    DateTime? @map("done_time")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([assetId])
+  @@index([userId, flowType])
+  @@index([userId, flowType, extends])
+  @@map("ft_user_asset_flow")
+} 

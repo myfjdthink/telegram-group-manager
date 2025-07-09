@@ -1,0 +1,39 @@
+---
+description: 项目架构
+globs: 
+alwaysApply: false
+---
+# Telegram Group Management System Architecture
+
+## System Overview
+A comprehensive Telegram group management platform built with Next.js, focusing on group administration, activity management, and commission tracking.
+
+## Tech Stack
+- **Frontend Framework**: Next.js
+- **Styling**: Tailwind CSS + shadcn/ui
+- **State Management**: React Context/Hooks
+- **UI/UX**: Responsive Design + Dark/Light Theme
+
+## Core Architecture Components
+
+### 2. Component Structure
+- **Layout Components**
+  - MainLayout
+  - Sidebar
+  - ThemeProvider
+  - ResponsiveWrapper
+
+- **Feature Components**
+  - Dashboard
+  - GroupManagement
+  - ActivityManagement
+  - QuestionManagement
+  - CommissionManagement
+
+- **UI Components**
+  - Buttons
+  - Forms
+  - Tables
+  - Charts
+  - Modals
+  - Cards
