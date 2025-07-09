@@ -11,16 +11,16 @@ interface SidebarProps {
 
 const menuItems = [
   { id: "dashboard", label: "仪表板", icon: LayoutDashboard },
-  { id: "questions", label: "问题管理", icon: MessageSquare },
   { id: "commission", label: "分佣管理", icon: DollarSign },
   { id: "groups", label: "群组管理", icon: Users },
+  { id: "questions", label: "问题管理", icon: MessageSquare },
 ]
 
 export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
   return (
     <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
       <div className="p-6 border-b border-gray-200">
-        <h1 className="text-xl font-bold text-gray-900">Telegram 群管理</h1>
+        <h1 className="text-xl font-bold text-gray-900">Task3 群策宝</h1>
         <p className="text-sm text-gray-500 mt-1">v1.0</p>
       </div>
 
