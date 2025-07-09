@@ -7,7 +7,7 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "ts-node --project scripts/tsconfig.json scripts/seed-groups.ts",
+    "seed:groups": "ts-node --project scripts/tsconfig.json scripts/seed-groups.ts",
     "seed:commission": "ts-node --project scripts/tsconfig.json scripts/seed-commission.ts"
   },
   "dependencies": {
@@ -63,9 +63,11 @@
   },
   "devDependencies": {
     "@prisma/client": "^6.11.1",
+    "@types/mockjs": "^1.0.10",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "mockjs": "^1.1.0",
     "postcss": "^8.5",
     "prisma": "^6.11.1",
     "tailwindcss": "^3.4.17",
