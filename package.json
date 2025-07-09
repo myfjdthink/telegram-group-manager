@@ -7,7 +7,8 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "ts-node --project scripts/tsconfig.json scripts/seed-groups.ts"
+    "seed": "ts-node --project scripts/tsconfig.json scripts/seed-groups.ts",
+    "seed:commission": "ts-node --project scripts/tsconfig.json scripts/seed-commission.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

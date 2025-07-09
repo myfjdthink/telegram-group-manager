@@ -1,41 +1,41 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Users, MessageSquare, Calendar, DollarSign, Activity } from "lucide-react"
 
+interface DashboardStats {
+  groups: {
+    total: number
+    change: number
+    changeType: "positive" | "negative"
+  }
+  questions: {
+    pending: number
+    change: number
+    changeType: "positive" | "negative"
+  }
+  activities: {
+    active: number
+    change: number
+    changeType: "positive" | "negative"
+  }
+  commission: {
+    amount: number
+    change: string
+    changeType: "positive" | "negative"
+  }
+}
+
 export function Dashboard() {
-  const stats = [
-    {
-      title: "总群组数",
-      value: "12",
-      change: "+2",
-      changeType: "positive",
-      icon: Users,
-    },
-    {
-      title: "待处理问题",
-      value: "23",
-      change: "-5",
-      changeType: "positive",
-      icon: MessageSquare,
-    },
-    {
-      title: "活跃活动",
-      value: "8",
-      change: "+3",
-      changeType: "positive",
-      icon: Calendar,
-    },
-    {
-      title: "今日分佣收益",
-      value: "$1,234",
-      change: "+12%",
-      changeType: "positive",
-      icon: DollarSign,
-    },
-  ]
+  const [stats, setStats] = useState<DashboardStats>({
+    groups: { total: 0, change: 0, changeType: "positive" },
+    questions: { pending: 0, change: 0, changeType: "positive" },
+    activities: { active: 0, change: 0, changeType: "positive" },
+    commission: { amount: 0, change: "0", changeType: "positive" },
+  })
 
   const recentQuestions = [
     {
@@ -91,6 +91,78 @@ export function Dashboard() {
     },
   ]
 
+  const fetchStats = async () => {
+    try {
+      // 获取群组统计
+      const groupsResponse = await fetch("/api/groups/stats")
+      const groupsData = await groupsResponse.json()
+
+      // 获取分佣统计
+      const commissionResponse = await fetch("/api/commissions/stats")
+      const commissionData = await commissionResponse.json()
+
+      setStats({
+        groups: {
+          total: groupsData.total || 0,
+          change: groupsData.change || 0,
+          changeType: groupsData.changeType || "positive",
+        },
+        questions: {
+          pending: groupsData.pendingQuestions || 0,
+          change: groupsData.questionsChange || 0,
+          changeType: groupsData.questionsChangeType || "positive",
+        },
+        activities: {
+          active: groupsData.activeActivities || 0,
+          change: groupsData.activitiesChange || 0,
+          changeType: groupsData.activitiesChangeType || "positive",
+        },
+        commission: {
+          amount: commissionData.today.amount || 0,
+          change: commissionData.today.change || "0",
+          changeType: commissionData.today.changeType || "positive",
+        },
+      })
+    } catch (error) {
+      console.error("获取仪表盘数据失败:", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchStats()
+  }, [])
+
+  const dashboardStats = [
+    {
+      title: "总群组数",
+      value: stats.groups.total.toString(),
+      change: stats.groups.change > 0 ? `+${stats.groups.change}` : stats.groups.change.toString(),
+      changeType: stats.groups.changeType,
+      icon: Users,
+    },
+    {
+      title: "待处理问题",
+      value: stats.questions.pending.toString(),
+      change: stats.questions.change.toString(),
+      changeType: stats.questions.changeType,
+      icon: MessageSquare,
+    },
+    {
+      title: "活跃活动",
+      value: stats.activities.active.toString(),
+      change: stats.activities.change > 0 ? `+${stats.activities.change}` : stats.activities.change.toString(),
+      changeType: stats.activities.changeType,
+      icon: Calendar,
+    },
+    {
+      title: "今日分佣收益",
+      value: `$${stats.commission.amount.toFixed(2)}`,
+      change: `${stats.commission.change}%`,
+      changeType: stats.commission.changeType,
+      icon: DollarSign,
+    },
+  ]
+
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
@@ -99,7 +171,7 @@ export function Dashboard() {
 
       {/* 统计卡片 */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => {
+        {dashboardStats.map((stat, index) => {
           const Icon = stat.icon
           return (
             <Card key={index}>
