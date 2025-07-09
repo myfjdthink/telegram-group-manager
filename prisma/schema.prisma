@@ -68,6 +68,7 @@ model Group {
   isCollecting             Boolean   @map("is_collecting")  // 是否正在收集数据
   activityPushUsdtLottery  Boolean   @map("activity_push_usdt_lottery") // 是否推送USDT抽奖活动
   activityPushNftLottery   Boolean   @map("activity_push_nft_lottery")  // 是否推送NFT抽奖活动
+  activityPushPriceGuess   Boolean   @default(false) @map("activity_push_price_guess") // 是否推送币价竞猜活动
   memberCount              Int       @map("member_count")   // 群成员数量
   createdAt                DateTime  @default(now()) @map("created_at")
   updatedAt                DateTime  @updatedAt @map("updated_at")
