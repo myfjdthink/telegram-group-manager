@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Users, MessageSquare, Calendar, DollarSign, TrendingUp, Activity, Download } from "lucide-react"
+import { Users, MessageSquare, Calendar, DollarSign, Activity } from "lucide-react"
 
 export function Dashboard() {
   const stats = [
@@ -95,10 +95,6 @@ export function Dashboard() {
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">仪表板</h1>
-        <Button>
-          <Download className="mr-2 h-4 w-4" />
-          导出报表
-        </Button>
       </div>
 
       {/* 统计卡片 */}
@@ -203,21 +199,6 @@ export function Dashboard() {
           </CardContent>
         </Card>
       </div>
-
-      {/* 收益趋势图占位 */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <TrendingUp className="mr-2 h-5 w-5" />
-            收益趋势
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
-            <p className="text-gray-500">收益趋势图表（集成图表库后显示）</p>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   )
 }

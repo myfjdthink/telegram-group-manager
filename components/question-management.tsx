@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { Switch } from "@/components/ui/switch"
 import { Search, MessageSquare, Bot, Settings, Languages, Tag, Eye } from "lucide-react"
 
 export function QuestionManagement() {
@@ -105,17 +104,17 @@ export function QuestionManagement() {
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900">问题管理</h1>
-        <div className="flex space-x-2">
-          <Button variant="outline" onClick={() => setShowSettings(true)}>
-            <Settings className="mr-2 h-4 w-4" />
-            翻译设置
-          </Button>
-          <Button variant="outline">
-            <Bot className="mr-2 h-4 w-4" />
-            AI 批量分析
-          </Button>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">问题管理</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            🚧 功能正在开发中，目前数据是 mock 的，
+            <button className="text-blue-600 hover:text-blue-800 underline ml-1">点击催一催程序员</button>
+          </p>
         </div>
+        <Button variant="outline" onClick={() => setShowSettings(true)}>
+          <Settings className="mr-2 h-4 w-4" />
+          翻译设置
+        </Button>
       </div>
 
       {/* 筛选和搜索 */}
@@ -371,27 +370,6 @@ export function QuestionManagement() {
                     <SelectItem value="ko">🇰🇷 韩文</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Switch id="auto-translate" defaultChecked />
-                <label htmlFor="auto-translate" className="text-sm">
-                  自动翻译新消息
-                </label>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Switch id="show-original" defaultChecked />
-                <label htmlFor="show-original" className="text-sm">
-                  显示原文
-                </label>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Switch id="ai-analysis" defaultChecked />
-                <label htmlFor="ai-analysis" className="text-sm">
-                  启用AI智能分析
-                </label>
               </div>
 
               <div className="flex space-x-3 pt-4">

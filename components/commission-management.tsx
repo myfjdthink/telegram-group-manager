@@ -2,19 +2,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import {
-  DollarSign,
-  TrendingUp,
-  Download,
-  Eye,
-  Users,
-  Calendar,
-  Wallet,
-  ArrowUpRight,
-  ArrowDownRight,
-} from "lucide-react"
+import { DollarSign, TrendingUp, Users, Wallet, ArrowUpRight, ArrowDownRight } from "lucide-react"
 
 export function CommissionManagement() {
   const commissionStats = [
@@ -40,7 +29,7 @@ export function CommissionManagement() {
       icon: Users,
     },
     {
-      title: "待结算",
+      title: "可提现余额",
       value: "$456.78",
       change: "-5.2%",
       changeType: "negative",
@@ -67,9 +56,9 @@ export function CommissionManagement() {
       inviter: "@crypto_fan",
       amount: 23.45,
       currency: "USDT",
-      status: "pending",
+      status: "completed",
       time: "2025-07-08 13:15",
-      txHash: "",
+      txHash: "0xabcd...efgh",
     },
     {
       id: 3,
@@ -80,43 +69,29 @@ export function CommissionManagement() {
       currency: "USDT",
       status: "completed",
       time: "2025-07-08 12:00",
-      txHash: "0xabcd...efgh",
-    },
-  ]
-
-  const subGroups = [
-    {
-      id: 1,
-      name: "NFT爱好者群",
-      inviter: "@user123",
-      members: 156,
-      todayRevenue: 45.67,
-      totalRevenue: 234.56,
-      commissionRate: 3,
-      status: "active",
-      joinDate: "2025-07-01",
+      txHash: "0xijkl...mnop",
     },
     {
-      id: 2,
-      name: "加密货币讨论群",
+      id: 4,
+      type: "activity",
+      group: "NFT爱好者群",
+      inviter: "@user456",
+      amount: 67.89,
+      currency: "USDT",
+      status: "completed",
+      time: "2025-07-08 11:45",
+      txHash: "0xqrst...uvwx",
+    },
+    {
+      id: 5,
+      type: "commission",
+      group: "加密货币讨论群",
       inviter: "@crypto_fan",
-      members: 89,
-      todayRevenue: 23.45,
-      totalRevenue: 156.78,
-      commissionRate: 3,
-      status: "active",
-      joinDate: "2025-07-03",
-    },
-    {
-      id: 3,
-      name: "新手入门群",
-      inviter: "@newbie001",
-      members: 23,
-      todayRevenue: 12.34,
-      totalRevenue: 67.89,
-      commissionRate: 3,
-      status: "paused",
-      joinDate: "2025-07-05",
+      amount: 34.56,
+      currency: "USDT",
+      status: "completed",
+      time: "2025-07-08 10:30",
+      txHash: "0xyzab...cdef",
     },
   ]
 
@@ -128,10 +103,6 @@ export function CommissionManagement() {
         return "secondary"
       case "failed":
         return "destructive"
-      case "active":
-        return "default"
-      case "paused":
-        return "secondary"
       default:
         return "secondary"
     }
@@ -140,15 +111,11 @@ export function CommissionManagement() {
   const getStatusText = (status: string) => {
     switch (status) {
       case "completed":
-        return "已完成"
+        return "已到账"
       case "pending":
         return "处理中"
       case "failed":
         return "失败"
-      case "active":
-        return "活跃"
-      case "paused":
-        return "暂停"
       default:
         return "未知"
     }
@@ -157,17 +124,17 @@ export function CommissionManagement() {
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900">分佣管理</h1>
-        <div className="flex space-x-2">
-          <Button variant="outline">
-            <Download className="mr-2 h-4 w-4" />
-            导出明细
-          </Button>
-          <Button>
-            <Wallet className="mr-2 h-4 w-4" />
-            立即结算
-          </Button>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">分佣管理</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            🚧 功能正在开发中，目前数据是 mock 的，
+            <button className="text-blue-600 hover:text-blue-800 underline ml-1">点击催一催程序员</button>
+          </p>
         </div>
+        <Button>
+          <Wallet className="mr-2 h-4 w-4" />
+          提现
+        </Button>
       </div>
 
       {/* 统计卡片 */}
@@ -200,155 +167,80 @@ export function CommissionManagement() {
         })}
       </div>
 
-      <Tabs defaultValue="records" className="space-y-6">
-        <TabsList>
-          <TabsTrigger value="records">分佣记录</TabsTrigger>
-          <TabsTrigger value="groups">下级群组</TabsTrigger>
-          <TabsTrigger value="analytics">收益分析</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="records" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between items-center">
-                <CardTitle>分佣记录</CardTitle>
-                <div className="flex space-x-2">
-                  <Select>
-                    <SelectTrigger className="w-[120px]">
-                      <SelectValue placeholder="时间范围" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="today">今天</SelectItem>
-                      <SelectItem value="week">本周</SelectItem>
-                      <SelectItem value="month">本月</SelectItem>
-                      <SelectItem value="all">全部</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Select>
-                    <SelectTrigger className="w-[120px]">
-                      <SelectValue placeholder="状态" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">全部</SelectItem>
-                      <SelectItem value="completed">已完成</SelectItem>
-                      <SelectItem value="pending">处理中</SelectItem>
-                      <SelectItem value="failed">失败</SelectItem>
-                    </SelectContent>
-                  </Select>
+      {/* 分佣记录 */}
+      <Card>
+        <CardHeader>
+          <div className="flex justify-between items-center">
+            <CardTitle>分佣记录</CardTitle>
+            <div className="flex space-x-2">
+              <Select>
+                <SelectTrigger className="w-[120px]">
+                  <SelectValue placeholder="时间范围" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="today">今天</SelectItem>
+                  <SelectItem value="week">本周</SelectItem>
+                  <SelectItem value="month">本月</SelectItem>
+                  <SelectItem value="all">全部</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select>
+                <SelectTrigger className="w-[120px]">
+                  <SelectValue placeholder="类型" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">全部</SelectItem>
+                  <SelectItem value="commission">分佣收益</SelectItem>
+                  <SelectItem value="activity">活动收益</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {commissionRecords.map((record) => (
+              <div key={record.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
+                <div className="flex items-center space-x-4">
+                  <div
+                    className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                      record.type === "commission" ? "bg-green-100" : "bg-blue-100"
+                    }`}
+                  >
+                    <DollarSign
+                      className={`h-5 w-5 ${record.type === "commission" ? "text-green-600" : "text-blue-600"}`}
+                    />
+                  </div>
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <span className="font-medium">{record.group}</span>
+                      <Badge variant="outline">{record.type === "commission" ? "分佣收益" : "活动收益"}</Badge>
+                    </div>
+                    <p className="text-sm text-gray-500">来源: {record.inviter}</p>
+                    <p className="text-xs text-gray-400">{record.time}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-lg font-bold text-green-600">
+                      +{record.amount} {record.currency}
+                    </span>
+                    <Badge variant={getStatusColor(record.status)}>{getStatusText(record.status)}</Badge>
+                  </div>
+                  <p className="text-xs text-gray-400 mt-1">TX: {record.txHash}</p>
                 </div>
               </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {commissionRecords.map((record) => (
-                  <div key={record.id} className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex items-center space-x-4">
-                      <div
-                        className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                          record.type === "commission" ? "bg-green-100" : "bg-blue-100"
-                        }`}
-                      >
-                        {record.type === "commission" ? (
-                          <DollarSign
-                            className={`h-5 w-5 ${record.type === "commission" ? "text-green-600" : "text-blue-600"}`}
-                          />
-                        ) : (
-                          <Calendar className="h-5 w-5 text-blue-600" />
-                        )}
-                      </div>
-                      <div>
-                        <div className="flex items-center space-x-2">
-                          <span className="font-medium">{record.group}</span>
-                          <Badge variant="outline">{record.type === "commission" ? "分佣收益" : "活动收益"}</Badge>
-                        </div>
-                        <p className="text-sm text-gray-500">邀请人: {record.inviter}</p>
-                        <p className="text-xs text-gray-400">{record.time}</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-lg font-bold text-green-600">
-                          +{record.amount} {record.currency}
-                        </span>
-                        <Badge variant={getStatusColor(record.status)}>{getStatusText(record.status)}</Badge>
-                      </div>
-                      {record.txHash && <p className="text-xs text-gray-400 mt-1">TX: {record.txHash}</p>}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+            ))}
+          </div>
 
-        <TabsContent value="groups" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>下级群组管理</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {subGroups.map((group) => (
-                  <div key={group.id} className="p-4 border rounded-lg">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                          <Users className="h-5 w-5 text-blue-600" />
-                        </div>
-                        <div>
-                          <h3 className="font-medium">{group.name}</h3>
-                          <p className="text-sm text-gray-500">邀请人: {group.inviter}</p>
-                        </div>
-                      </div>
-                      <Badge variant={getStatusColor(group.status)}>{getStatusText(group.status)}</Badge>
-                    </div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                      <div>
-                        <span className="text-gray-500">成员数量</span>
-                        <p className="font-medium">{group.members}</p>
-                      </div>
-                      <div>
-                        <span className="text-gray-500">今日收益</span>
-                        <p className="font-medium text-green-600">${group.todayRevenue}</p>
-                      </div>
-                      <div>
-                        <span className="text-gray-500">总收益</span>
-                        <p className="font-medium">${group.totalRevenue}</p>
-                      </div>
-                      <div>
-                        <span className="text-gray-500">分佣比例</span>
-                        <p className="font-medium">{group.commissionRate}%</p>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between items-center mt-3 pt-3 border-t">
-                      <span className="text-xs text-gray-400">加入时间: {group.joinDate}</span>
-                      <Button variant="outline" size="sm">
-                        <Eye className="mr-1 h-3 w-3" />
-                        查看详情
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="analytics" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>收益分析</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
-                <p className="text-gray-500">收益趋势图表（集成图表库后显示）</p>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+          {/* 加载更多 */}
+          <div className="text-center mt-6">
+            <Button variant="outline" className="bg-transparent">
+              加载更多记录
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }

@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { LayoutDashboard, MessageSquare, DollarSign, Users, Settings, LogOut } from "lucide-react"
+import { LayoutDashboard, MessageSquare, DollarSign, Users, LogOut } from "lucide-react"
 
 interface SidebarProps {
   activeTab: string
@@ -45,10 +45,6 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
       </nav>
 
       <div className="p-4 border-t border-gray-200 space-y-2">
-        <Button variant="ghost" className="w-full justify-start">
-          <Settings className="mr-3 h-4 w-4" />
-          设置
-        </Button>
         <Button variant="ghost" className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50">
           <LogOut className="mr-3 h-4 w-4" />
           退出登录
